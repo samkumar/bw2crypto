@@ -169,16 +169,9 @@ ED25519_FN(ed25519_sign_open) (const unsigned char *m, size_t mlen, const ed2551
 	bignum256modm hram, S;
 	unsigned char checkR[32];
 
-	printf("M is\n");
-	print_blob(m, mlen);
-	printf("RS is\n");
-	print_blob(RS, 64);
-
 	if ((RS[63] & 224) || !ge25519_unpack_negative_vartime(&A, pk))
 		return -1;
 	
-	printf("Got past the first return\n");
-
 	/* hram = H(R,A,m) */
 	ed25519_hram(hash, RS, pk, m, mlen);
 	expand256_modm(hram, hash, 64);
@@ -189,10 +182,6 @@ ED25519_FN(ed25519_sign_open) (const unsigned char *m, size_t mlen, const ed2551
 	/* SB - H(R,A,m)A */
 	ge25519_double_scalarmult_vartime(&R, &A, hram, S);
 	ge25519_pack(checkR, &R);
-
-	printf("RS and checkR are\n");
-	print_blob(RS, 32);
-	print_blob(checkR, 32);
 
 	/* check that R = SB - H(R,A,m)A */
 	return ed25519_verify(RS, checkR, 32) ? 0 : -1;
