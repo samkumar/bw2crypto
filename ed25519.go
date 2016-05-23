@@ -30,6 +30,7 @@ import (
 	"crypto/sha512"
 	"encoding/base64"
 	"errors"
+	"fmt"
 	"hash"
 	"sync"
 	"unsafe"
@@ -153,6 +154,8 @@ func GenerateKeypair() (sk []byte, vk []byte) {
 }
 
 func CheckKeypair(sk []byte, vk []byte) bool {
+	fmt.Printf("Signing key: %v\n", sk)
+	fmt.Printf("Verifying key: %v\n", vk)
 	blob := make([]byte, 128)
 	//rand.Read(blob)
 	for i := 0; i < 128; i++ {
