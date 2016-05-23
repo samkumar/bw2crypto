@@ -154,10 +154,7 @@ func GenerateKeypair() (sk []byte, vk []byte) {
 
 func CheckKeypair(sk []byte, vk []byte) bool {
 	blob := make([]byte, 128)
-	//rand.Read(blob)
-	for i := 0; i < 128; i++ {
-		blob[i] = 0xaf
-	}
+	rand.Read(blob)
 	sig := make([]byte, 64)
 	SignBlob(sk, vk, sig, blob)
 	return VerifyBlob(vk, sig, blob)
