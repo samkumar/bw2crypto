@@ -21,6 +21,10 @@
 #include "ed25519-randombytes.h"
 #include "ed25519-hash-custom.h"
 
+#ifndef DWINSUPPORT
+#error "No windows support"
+#endif
+
 void bw_generate_keypair(unsigned char *private, unsigned char *public)
 {
     ed25519_randombytes_unsafe(private, 32);
