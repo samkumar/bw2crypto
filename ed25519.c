@@ -14,6 +14,8 @@
 #define ED25519_FN2(fn,suffix) ED25519_FN3(fn,suffix)
 #define ED25519_FN(fn)         ED25519_FN2(fn,ED25519_SUFFIX)
 
+#include <stdio.h>
+
 #include "ed25519-donna.h"
 #include "ed25519.h"
 #include "ed25519-randombytes.h"
@@ -150,6 +152,14 @@ ED25519_FN(ed25519_sign_vector) (const unsigned char **ms, size_t *mlens, size_t
 	contract256_modm(RS + 32, S);
 }
 
+void
+print_blob(const unsigned char* buf, const size_t len) {
+	size_t i;
+	for (i = 0; i < len; i++) {
+		printf("%x", buf[i]);
+	}
+	printf("\n");
+}
 
 int
 ED25519_FN(ed25519_sign_open) (const unsigned char *m, size_t mlen, const ed25519_public_key pk, const ed25519_signature RS) {
@@ -157,6 +167,11 @@ ED25519_FN(ed25519_sign_open) (const unsigned char *m, size_t mlen, const ed2551
 	hash_512bits hash;
 	bignum256modm hram, S;
 	unsigned char checkR[32];
+
+	printf("M is\n");
+	print_blob(m, mlen);
+	printf("RS is\n");
+	print_blob(RS, 64);
 
 	if ((RS[63] & 224) || !ge25519_unpack_negative_vartime(&A, pk))
 		return -1;
