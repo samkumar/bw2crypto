@@ -163,6 +163,7 @@ func CheckKeypair(sk []byte, vk []byte) bool {
 	}
 	sig := make([]byte, 64)
 	SignBlob(sk, vk, sig, blob)
+	fmt.Printf("Signature: %v\n", sig)
 	return VerifyBlob(vk, sig, blob)
 }
 
