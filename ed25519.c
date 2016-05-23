@@ -21,7 +21,7 @@
 #include "ed25519-randombytes.h"
 #include "ed25519-hash-custom.h"
 
-#ifndef DWINSUPPORT
+#ifndef WINSUPPORT
 #error "No windows support"
 #endif
 
