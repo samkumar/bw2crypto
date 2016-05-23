@@ -19,7 +19,7 @@
 #include "ed25519-randombytes.h"
 #include "ed25519-hash.h"
 
-void bw_generate_keypair(unsigned char *private, unsigned char *public)
+__attribute__((used)) void bw_generate_keypair(unsigned char *private, unsigned char *public)
 {
     ed25519_randombytes_unsafe(private, 32);
     ed25519_publickey(private, public);
@@ -29,7 +29,7 @@ void bw_generate_keypair(unsigned char *private, unsigned char *public)
 	Generates a (extsk[0..31]) and aExt (extsk[32..63])
 */
 
-DONNA_INLINE static void
+DONNA_INLINE static __attribute__((used)) void
 ed25519_extsk(hash_512bits extsk, const ed25519_secret_key sk) {
 	ed25519_hash(extsk, sk, 32);
 	extsk[0] &= 248;
@@ -37,7 +37,7 @@ ed25519_extsk(hash_512bits extsk, const ed25519_secret_key sk) {
 	extsk[31] |= 64;
 }
 
-static void
+static __attribute__((used)) void
 ed25519_hram(hash_512bits hram, const ed25519_signature RS, const ed25519_public_key pk, const unsigned char *m, size_t mlen) {
 	ed25519_hash_context ctx;
 	ed25519_hash_init(&ctx);
@@ -47,7 +47,7 @@ ed25519_hram(hash_512bits hram, const ed25519_signature RS, const ed25519_public
 	ed25519_hash_final(&ctx, hram);
 }
 
-static void
+static __attribute__((used)) void
 ed25519_hram_vector(hash_512bits hram, const ed25519_signature RS, const ed25519_public_key pk, const unsigned char **ms, size_t *mlens, size_t vlen) {
 	size_t i;
 	ed25519_hash_context ctx;
@@ -61,7 +61,7 @@ ed25519_hram_vector(hash_512bits hram, const ed25519_signature RS, const ed25519
 	ed25519_hash_final(&ctx, hram);
 }
 
-void
+__attribute__((used)) void
 ED25519_FN(ed25519_publickey) (const ed25519_secret_key sk, ed25519_public_key pk) {
 	bignum256modm a;
 	ge25519 ALIGN(16) A;
@@ -75,7 +75,7 @@ ED25519_FN(ed25519_publickey) (const ed25519_secret_key sk, ed25519_public_key p
 }
 
 
-void
+__attribute__((used)) void
 ED25519_FN(ed25519_sign) (const unsigned char *m, size_t mlen, const ed25519_secret_key sk, const ed25519_public_key pk, ed25519_signature RS) {
 	ed25519_hash_context ctx;
 	bignum256modm r, S, a;
@@ -111,7 +111,7 @@ ED25519_FN(ed25519_sign) (const unsigned char *m, size_t mlen, const ed25519_sec
 }
 
 //Little variant to be able to take message in parts
-void
+__attribute__((used)) void
 ED25519_FN(ed25519_sign_vector) (const unsigned char **ms, size_t *mlens, size_t vlen, const ed25519_secret_key sk, const ed25519_public_key pk, ed25519_signature RS) {
 	size_t i;
 	ed25519_hash_context ctx;
@@ -151,7 +151,7 @@ ED25519_FN(ed25519_sign_vector) (const unsigned char **ms, size_t *mlens, size_t
 }
 
 
-int
+__attribute__((used)) int
 ED25519_FN(ed25519_sign_open) (const unsigned char *m, size_t mlen, const ed25519_public_key pk, const ed25519_signature RS) {
 	ge25519 ALIGN(16) R, A;
 	hash_512bits hash;
@@ -176,7 +176,7 @@ ED25519_FN(ed25519_sign_open) (const unsigned char *m, size_t mlen, const ed2551
 	return ed25519_verify(RS, checkR, 32) ? 0 : -1;
 }
 
-int
+__attribute__((used)) int
 ED25519_FN(ed25519_sign_open_vector) (const unsigned char **ms, size_t *mlens, size_t vlen, const ed25519_public_key pk, const ed25519_signature RS) {
 	ge25519 ALIGN(16) R, A;
 	hash_512bits hash;
@@ -208,7 +208,7 @@ ED25519_FN(ed25519_sign_open_vector) (const unsigned char **ms, size_t *mlens, s
 	Fast Curve25519 basepoint scalar multiplication
 */
 
-void
+__attribute__((used)) void
 ED25519_FN(curved25519_scalarmult_basepoint) (curved25519_key pk, const curved25519_key e) {
 	curved25519_key ec;
 	bignum256modm s;
