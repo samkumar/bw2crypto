@@ -9,6 +9,8 @@
 	void ed25519_hash(uint8_t *hash, const uint8_t *in, size_t inlen);
 */
 
+#error "Custom hash"
+
 typedef int32_t ed25519_hash_context;
 
 extern void HashInit(ed25519_hash_context *ctx);

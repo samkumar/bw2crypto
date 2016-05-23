@@ -21,9 +21,6 @@
 #include "ed25519-randombytes.h"
 #include "ed25519-hash-custom.h"
 
-#ifndef WINSUPPORT
-#error "No windows support"
-#endif
 
 void bw_generate_keypair(unsigned char *private, unsigned char *public)
 {
