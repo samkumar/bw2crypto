@@ -19,7 +19,7 @@ package main
 
 // #cgo CFLAGS: -O0
 // #cgo linux LDFLAGS: -lssl -lcrypto
-// #cgo !linux CFLAGS: -DWINSUPPORT
+// #cgo !linux CFLAGS: -DWINSUPPORT -O0
 // #include "ed25519.h"
 // #include <string.h>
 // #include <stdint.h>
