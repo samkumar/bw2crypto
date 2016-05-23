@@ -19,7 +19,7 @@
 #include "ed25519-donna.h"
 #include "ed25519.h"
 #include "ed25519-randombytes.h"
-#include "ed25519-hash-custom.h"
+#include "ed25519-hash.h"
 
 
 void bw_generate_keypair(unsigned char *private, unsigned char *public)
